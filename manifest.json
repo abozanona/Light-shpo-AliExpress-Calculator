@@ -1,0 +1,41 @@
+{
+    "name": "Light shpo AliExpress Calculator.",
+    "short_name": "LSAEC",
+    "description": "Calculate the price of AliExpress Categories",
+    "version" : "1.0.0",
+
+    "browser_action": {
+        "default_icon": "icon16.png",
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "background": {
+        "scripts": [
+            "js/global/jquery.min.js",
+            "js/global/generalFunctions.js",
+            "js/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*.aliexpress.com/*", "https://*.aliexpress.com/*"],
+            "js": [
+                "js/global/jquery.min.js",
+                "js/global/generalFunctions.js",
+                "js/calculator.js",
+                "js/content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "permissions": [
+        "http://*.aliexpress.com/*",
+        "https://*.aliexpress.com/*"
+    ],
+    "manifest_version": 2,
+    "web_accessible_resources": [ "js/*"  ]
+}

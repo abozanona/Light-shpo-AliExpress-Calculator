@@ -5,7 +5,6 @@ const distinct = function (value, index, self) {
     let price = 99999999;
     if (!skuProducts)
         return;
-    console.log('Original price', price);
     let products = [];
     skuProducts = JSON.parse(JSON.stringify(skuProducts));
     for (let i = 0; i < skuProducts.length; i++) {
@@ -16,6 +15,7 @@ const distinct = function (value, index, self) {
         });
         price = Math.min(price, skuProducts[i].skuVal.actSkuCalPrice);
     }
+    console.log('Original price', price);
     let categoriesNumber = products[0].name.length;
 
     let container = document.createElement("div");
@@ -73,10 +73,13 @@ const distinct = function (value, index, self) {
             keys[products[i].name[0]][products[i].name[1]] = products[i].price;
         }
 
-        key1 = key1.filter(distinct);
-        key2 = key2.filter(distinct);
+        key1 = key1.filter(distinct).sort();
+        key2 = key2.filter(distinct).sort();
+        keys = keys.sort();
 
         console.log('keys', keys);
+        console.log('key1', key1);
+        console.log('key2', key2);
 
         tr = document.createElement("tr");
         td = document.createElement("td");
@@ -98,7 +101,7 @@ const distinct = function (value, index, self) {
                 td = document.createElement("td");
                 let prevPrice = (i == 0) ? price : keys[key1[j]][key2[i - 1]];
                 let currentPrice = keys[key1[j]][key2[i]];
-                td.innerHTML = products[i].price + `<sub style="color:${(currentPrice - prevPrice >= 0) ? 'green' : 'red'};">(${currentPrice - prevPrice})</sub>`;
+                td.innerHTML = currentPrice + `<sub style="color:${(currentPrice - prevPrice >= 0) ? 'green' : 'red'};">(${currentPrice - prevPrice})</sub>`;
                 tr.appendChild(td);
             }
             t.appendChild(tr);
@@ -107,8 +110,6 @@ const distinct = function (value, index, self) {
     else {
         return;
     }
-
-    console.log(products);
 
 
     document.body.appendChild(container);
